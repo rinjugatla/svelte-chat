@@ -1,2 +1,35 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import { signInWithGoogle, signOutWithGoogle } from "$lib/firebase";
+	import { UserId } from "$lib/store";
+	import { onDestroy } from "svelte";
+
+    /**
+	 * @type {string}
+	 */
+    let uid;
+
+    const unsubscribe = UserId.subscribe((id) => {
+        uid = id;
+    });
+    onDestroy(() => {
+        unsubscribe();
+    });
+</script>
+
+<main>
+    <div>
+        {#if uid}
+            <a
+                class="block"
+                href="#/"
+                on:click={signOutWithGoogle}>Logout</a
+            >
+        {:else}
+            <a
+                class="block"
+                href="#/"
+                on:click={signInWithGoogle}>Login</a
+            >
+        {/if}
+    </div>
+</main>
