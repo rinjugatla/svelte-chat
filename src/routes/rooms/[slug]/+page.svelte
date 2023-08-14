@@ -22,6 +22,6 @@
 </script>
 
 {#if isValidRoom}
-    <ChatHistories />
-    <ChatInput />
+    <ChatHistories {roomId} />
+    <ChatInput {roomId} />
 {/if}

@@ -78,15 +78,16 @@ export const postRoom = async (name = '') => {
 
 /**
  * チャットを登録
- * @param string メッセージ 
+ * @param roomId string 部屋ID
+ * @param message string メッセージ 
  * @returns チャットID
  */
-export const postMessage = async (message = '') => {
+export const postMessage = async (roomId = '', message = '') => {
 	try {
 		const userInfo = getCurrentUserInfo();
 		if (userInfo == null){ return; }
 
-		const docRef = await addDoc(collection(db, 'chat'), {
+		const docRef = await addDoc(collection(db, 'rooms', roomId, 'chats'), {
 			message: message,
 			uid: userInfo?.uid,
 			created_at: dayjs().format('YYYY/MM/DD HH:mm:ss')
@@ -102,11 +103,12 @@ export const postMessage = async (message = '') => {
 
 /**
  * チャット履歴をリアルタイムに取得
+ * @param roomId string 部屋ID
  * @returns 履歴取得停止
  */
-export const onSnapshotMessages = () => {
+export const onSnapshotMessages = (roomId = '') => {
     const q = query(
-        collection(db, 'chat'),
+        collection(db, 'rooms', roomId, 'chats'),
         orderBy('created_at', 'desc'));
 	const unsubscribe = onSnapshot(q, (querySnapshot) => {
         /**

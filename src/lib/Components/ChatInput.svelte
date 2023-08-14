@@ -15,12 +15,14 @@
 		unsubscribe();
 	});
 
+	export let roomId = '';
+
     // dbに送信するメッセージ
 	let message = '';
 	let posting = false;
 	const submit = async () => {
 		posting = true;
-		const result = await postMessage(message);
+		const result = await postMessage(roomId, message);
 		if (result) {
 			// alert(result);
 		} else {

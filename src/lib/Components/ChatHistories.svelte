@@ -4,6 +4,7 @@
 	import { SnapshotMessages } from '$lib/store';
 	import ChatHistory from './ChatHistory.svelte';
 
+	export let roomId = '';
 	/**
 	 * @type {import('svelte/store').Unsubscriber}
 	 */
@@ -18,7 +19,7 @@
 	let messages = [];
 	onMount(async () => {
 		try {
-			unsubscribeFirestore = onSnapshotMessages();
+			unsubscribeFirestore = onSnapshotMessages(roomId);
 			unsubscribeStore = SnapshotMessages.subscribe((value) => {
 				messages = value;
 			});
