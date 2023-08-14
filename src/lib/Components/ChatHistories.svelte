@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { onSnapshotMessages } from '$lib/api';
 	import { SnapshotMessages } from '$lib/store';
-	import Chat from './Chat.svelte';
+	import ChatHistory from './ChatHistory.svelte';
 
 	/**
 	 * @type {import('svelte/store').Unsubscriber}
@@ -35,6 +35,6 @@
 
 <div class="m-5">
 	{#each messages as message}
-		<Chat {message} />
+		<ChatHistory {message} />
 	{/each}
 </div>
