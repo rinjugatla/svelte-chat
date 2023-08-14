@@ -1,10 +1,10 @@
 <script>
 	import { DarkMode } from 'flowbite-svelte';
 	import { Navbar, NavBrand, Button } from 'flowbite-svelte';
-    import { signInWithGoogle, signOutWithGoogle } from '$lib/firebase';
-    import { UserId } from '$lib/store';
-    import { onDestroy } from 'svelte';
-    /**
+	import { signInWithGoogle, signOutWithGoogle } from '$lib/firebase';
+	import { UserId } from '$lib/store';
+	import { onDestroy } from 'svelte';
+	/**
 	 * @type {string}
 	 */
 	let uid;
@@ -39,12 +39,14 @@
 			>
 		</NavBrand>
 	</div>
-	<div>
-        {#if uid}
-            <Button size="sm" color="alternative" on:click={signOutWithGoogle}>Logout</Button>
-        {:else}
-            <Button size="sm" on:click={signInWithGoogle}>Login</Button>
-        {/if}
-		<DarkMode />
+	<div class="flex justify-center items-center">
+		<div class="mr-2">
+			{#if uid}
+				<Button size="sm" color="alternative" on:click={signOutWithGoogle}>Logout</Button>
+			{:else}
+				<Button size="sm" on:click={signInWithGoogle}>Login</Button>
+			{/if}
+		</div>
+        <DarkMode size="sm" />
 	</div>
 </Navbar>
