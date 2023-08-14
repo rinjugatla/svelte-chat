@@ -32,6 +32,13 @@
 		message = '';
 		posting = false;
 	};
+
+	const submitByKey = async (/** @type {KeyboardEvent} */ event) => {
+		const needSubmit = event.ctrlKey && event.key == 'Enter';
+		if(!needSubmit){ return; }
+		
+		await submit();
+	};
 </script>
 
 <div>
@@ -39,7 +46,7 @@
 		<form class="p-5">
 			<ButtonGroup class="w-full">
 				<InputAddon class="break-keep">メッセージ</InputAddon>
-				<Input id="message" type="text" bind:value={message} />
+				<Input id="message" type="text" bind:value={message} on:keydown={submitByKey}/>
 				<Button class="break-keep" color="primary" disabled={posting || message.length == 0} on:click={submit}>送信</Button>
 			</ButtonGroup>
 		</form>
