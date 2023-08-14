@@ -23,12 +23,9 @@ const getRoomIdByName = async (name = '') => {
 		 */
 		let ids = [];
 		querySnapshot.forEach((doc) => {
-			const data = doc.data();
-			ids.push(data.id);
+			ids.push(doc.id);
 		});
-
 		return ids[0];
-
 	} catch(e){
 		return null;
 	}
