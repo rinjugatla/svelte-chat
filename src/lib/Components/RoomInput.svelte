@@ -29,6 +29,13 @@
 
 		posting = false;
 	};
+
+	const submitByKey = async (/** @type {KeyboardEvent} */ event) => {
+		const needSubmit = event.key == 'Enter';
+		if(!needSubmit){ return; }
+		
+		await submit();
+	};
 </script>
 
 <div>
@@ -36,7 +43,7 @@
         <form class="p-5">
 			<ButtonGroup class="w-full">
 				<InputAddon class="break-keep">部屋名</InputAddon>
-				<Input id="room" type="text" bind:value={room} />
+				<Input id="room" type="text" bind:value={room} on:keydown={submitByKey}/>
 				<Button class="break-keep" color="primary" disabled={posting || room.length == 0} on:click={submit}>入室</Button>
 			</ButtonGroup>
         </form>
