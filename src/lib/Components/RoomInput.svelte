@@ -1,7 +1,7 @@
 <script>
     import { UserId } from '$lib/store';
 	import { onDestroy } from 'svelte';
-    import { Textarea, Label, Button } from 'flowbite-svelte';
+    import { ButtonGroup, InputAddon, Input, Button } from 'flowbite-svelte';
 	import { postRoom } from '$lib/api';
 
     /**
@@ -34,13 +34,11 @@
 <div>
     {#if uid}
         <form class="p-5">
-            <div>
-                <Label for="room" class="mb-4">ルーム</Label>
-                <Textarea id="room" placeholder="" rows="1" bind:value={room} />
-            </div>
-            <div class="text-right">
-                <Button disabled={posting || room.length == 0} on:click={submit}>入室</Button>    
-            </div>
+			<ButtonGroup class="w-full">
+				<InputAddon class="break-keep">部屋名</InputAddon>
+				<Input id="room" type="text" bind:value={room} />
+				<Button class="break-keep" color="primary" disabled={posting || room.length == 0} on:click={submit}>入室</Button>
+			</ButtonGroup>
         </form>
     {/if}
 </div>
