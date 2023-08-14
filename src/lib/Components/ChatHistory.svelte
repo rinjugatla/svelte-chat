@@ -14,5 +14,5 @@
 		name="papper-plane-outline"
 		class="w-5 h-5 text-primary-600 dark:text-primary-500 rotate-45"
 	/>
-	<div class="pl-4 text-sm font-normal">{message}</div>
+	<div class="pl-4 text-sm font-normal break-all">{message}</div>
 </Toast>
