@@ -1,5 +1,5 @@
 import { doc, collection, addDoc, query, onSnapshot, orderBy, getDocs } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, getCurrentUserInfo } from './firebase';
 import dayjs from 'dayjs';
 import { FirebaseError } from 'firebase/app';
 import { SnapshotMessages } from './store';
@@ -11,8 +11,12 @@ import { SnapshotMessages } from './store';
  */
 export const postMessage = async (message = '') => {
 	try {
+		const userInfo = getCurrentUserInfo();
+		if (userInfo == null){ return; }
+
 		const docRef = await addDoc(collection(db, 'chat'), {
 			message: message,
+			uid: userInfo?.uid,
 			created_at: dayjs().format('YYYY/MM/DD HH:mm:ss')
 		});
 
