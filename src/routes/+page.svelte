@@ -4,12 +4,12 @@
 	import { UserId, SnapshotMessages } from '$lib/store';
 	import { onDestroy, onMount } from 'svelte';
 	import { Textarea, Label, Button } from 'flowbite-svelte';
+	import ChatHistories from '$lib/Components/ChatHistories.svelte';
 
 	/**
 	 * @type {string}
 	 */
 	let uid;
-
 	const unsubscribe = UserId.subscribe((id) => {
 		uid = id;
 	});
@@ -28,22 +28,6 @@
 	// 	}
 	// });
     
-
-    /**
-	 * @type {string[]}
-	 */
-    let messages = [];
-	onMount(async () => {
-		try {
-			const unsubscribe = onSnapshotMessages();
-            SnapshotMessages.subscribe((value)  => {
-                messages = value;
-            });
-		} catch (e) {
-			alert('faild fetchMessages');
-		}
-	});
-
 	// dbに送信するメッセージ
 	let message = '';
     
@@ -71,14 +55,7 @@
     {/if}
 </div>
 
-<div>
-    
-    {#each messages as m}
-    <div>
-        {m}
-    </div>
-    {/each}
-</div>
+<ChatHistories />
 
 <div>
     {#if uid}
