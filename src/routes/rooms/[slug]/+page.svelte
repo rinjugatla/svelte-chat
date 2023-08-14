@@ -9,15 +9,21 @@
     export let data;
     // 部屋名
     const name = data.name;
+    let roomNameValidated = false;
 
     onMount(async () => {
         const exists = await existsRoom(name);
-        if (exists){ return; }
+        if (exists){
+            roomNameValidated = true; 
+            return; 
+        }
 
         alert('部屋が存在しません。部屋を登録してください。');
         document.location.href = `/`;
 	});
 </script>
 
-<ChatHistories />
-<ChatInput />
+{#if roomNameValidated}
+    <ChatHistories />
+    <ChatInput />    
+{/if}
