@@ -16,23 +16,10 @@
 	onDestroy(() => {
 		unsubscribe();
 	});
-
-	// dbから取得したメッセージ
-	// let promiseMessages = fetchMessages();
-	// onMount(async () => {
-	// 	try {
-	// 		promiseMessages = await fetchMessages();
-    //         console.log(`promiseMessages: ${promiseMessages}`);
-	// 	} catch (e) {
-	// 		alert('faild fetchMessages');
-	// 	}
-	// });
     
 	// dbに送信するメッセージ
 	let message = '';
-    
 	let posting = false;
-
 	const submit = async () => {
 		posting = true;
 		const result = await postMessage(message);

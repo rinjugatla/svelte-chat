@@ -25,27 +25,6 @@ export const postMessage = async (message = '') => {
 };
 
 /**
- * チャット履歴を取得
- * @returns 履歴
- */
-export const fetchMessages = async () => {
-    const q = query(
-        collection(db, 'chat'),
-        orderBy('created_at', 'desc'));
-    const querySnapshot = await getDocs(q);
-    /**
-     * @type {string[]}
-     */
-    let messages = [];
-    querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        messages.push(data.message);
-    })
-
-    return messages;
-}
-
-/**
  * チャット履歴をリアルタイムに取得
  * @returns 履歴取得停止
  */
