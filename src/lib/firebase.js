@@ -50,3 +50,14 @@ export const signOutWithGoogle = () => {
         alert(`ログアウトに失敗しました。\n${error}`);
     });
 }
+
+export const getCurrentUserInfo = () => {
+    if (auth == null){ return null; }
+    const info = {
+        displayName: auth.currentUser?.displayName,
+        email: auth.currentUser?.email,
+        uid: auth.currentUser?.uid
+    }
+
+    return info;
+}
