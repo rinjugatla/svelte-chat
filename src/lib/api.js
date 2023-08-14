@@ -1,4 +1,4 @@
-import { doc, collection, addDoc, query, onSnapshot, orderBy, getDocs, where, documentId } from 'firebase/firestore';
+import { doc, collection, addDoc, query, onSnapshot, orderBy, getDoc, getDocs, where } from 'firebase/firestore';
 import { db, getCurrentUserInfo } from './firebase';
 import dayjs from 'dayjs';
 import { FirebaseError } from 'firebase/app';
@@ -31,18 +31,20 @@ const getRoomIdByName = async (name = '') => {
 	}
 }
 
+/**
+ * 部屋が存在するか
+ * @param {string} id 部屋ID
+ * @returns 
+ */
 export const existRoomById = async(id = '') => {
 	try{
 		// すでに部屋が作成済みかチェック
-		const q = query(
-			collection(db, 'rooms'),
-			where(documentId(), '==', id));
-		const querySnapshot = await getDocs(q);
-		const exists = querySnapshot.size > 0;
+		const docRef = doc(db, 'rooms', id);
+		const querySnapshot = await getDoc(docRef);
+		const exists = querySnapshot.exists();
 		return exists;
 	}
 	catch (e) {
-		console.log(e);
 		return false;
 	}
 }
