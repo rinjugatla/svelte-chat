@@ -1,4 +1,4 @@
 /** @type {import('./$types').PageLoad} */
 export function load({ params }) {
-    return {name: params.slug}
+    return {roomId: params.slug}
 }

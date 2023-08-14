@@ -20,9 +20,9 @@
 	let posting = false;
 	const submit = async () => {
 		posting = true;
-		const result = await postRoom(room);
-		if (result) {
-			document.location.href = `/rooms/${room}`;
+		const roomId = await postRoom(room);
+		if (roomId) {
+			document.location.href = `/rooms/${roomId}`;
 		} else {
 			alert('ルームの作成に失敗しました。');
 		}

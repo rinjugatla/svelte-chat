@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-	import { existsRoom } from '$lib/api';
+	import { existRoomById } from '$lib/api';
 
     import ChatHistories from '$lib/Components/ChatHistories.svelte';
 	import ChatInput from '$lib/Components/ChatInput.svelte';
@@ -8,22 +8,20 @@
     /** @type {import('./$types').PageData} */
     export let data;
     // 部屋名
-    const name = data.name;
-    let roomNameValidated = false;
+    const roomId = data.roomId;
+    let isValidRoom = false;
 
     onMount(async () => {
-        const exists = await existsRoom(name);
-        if (exists){
-            roomNameValidated = true; 
-            return; 
-        }
+        const exists = await existRoomById(roomId);
+        isValidRoom = exists;
+        if (exists){ return; }
 
         alert('部屋が存在しません。部屋を登録してください。');
         document.location.href = `/`;
 	});
 </script>
 
-{#if roomNameValidated}
+{#if isValidRoom}
     <ChatHistories />
-    <ChatInput />    
+    <ChatInput />
 {/if}

@@ -1,14 +1,14 @@
-import { doc, collection, addDoc, query, onSnapshot, orderBy, getDocs, where } from 'firebase/firestore';
+import { doc, collection, addDoc, query, onSnapshot, orderBy, getDocs, where, documentId } from 'firebase/firestore';
 import { db, getCurrentUserInfo } from './firebase';
 import dayjs from 'dayjs';
 import { FirebaseError } from 'firebase/app';
 import { SnapshotMessages } from './store';
 
 /**
- * 部屋が存在するか
+ * 部屋IDを取得
  * @param {string} name 部屋名
  */
-export const existsRoom = async (name = '') => {
+const getRoomIdByName = async (name = '') => {
 	try {
 		// すでに部屋が作成済みかチェック
 		const q = query(
@@ -16,8 +16,36 @@ export const existsRoom = async (name = '') => {
 			where('name', '==', name));
 		const querySnapshot = await getDocs(q);
 		const exists = querySnapshot.size > 0;
-		return exists;
+		if (!exists) { return null; }
+
+		/**
+		 * @type {string[]}
+		 */
+		let ids = [];
+		querySnapshot.forEach((doc) => {
+			const data = doc.data();
+			ids.push(data.id);
+		});
+
+		return ids[0];
+
 	} catch(e){
+		return null;
+	}
+}
+
+export const existRoomById = async(id = '') => {
+	try{
+		// すでに部屋が作成済みかチェック
+		const q = query(
+			collection(db, 'rooms'),
+			where(documentId(), '==', id));
+		const querySnapshot = await getDocs(q);
+		const exists = querySnapshot.size > 0;
+		return exists;
+	}
+	catch (e) {
+		console.log(e);
 		return false;
 	}
 }
@@ -25,23 +53,25 @@ export const existsRoom = async (name = '') => {
 /**
  * 部屋を登録
  * @param {string} name 作成する部屋名
- * @returns 部屋が利用可能か
+ * @returns 部屋ID
  */
 export const postRoom = async (name = '') => {
 	try {
 		const userInfo = getCurrentUserInfo();
-		if (userInfo == null){ return false; }
+		if (userInfo == null){ return null; }
 
-		const exists = await existsRoom(name);
-		if (exists){ return true; }
+		const roomId = await getRoomIdByName(name);
+		const exists = roomId != null;
+		if (exists){ return roomId; }
 
-		await addDoc(collection(db, 'rooms'), {
+		const doc = await addDoc(collection(db, 'rooms'), {
 			name: name,
 			created_by: userInfo?.uid,
 			created_at: dayjs().format('YYYY/MM/DD HH:mm:ss')
 		});
 
-		return true;
+		const registedRoomId = doc.id;
+		return registedRoomId;
 	} catch(e) {
 		if (e instanceof FirebaseError) {
 			console.log(e);
