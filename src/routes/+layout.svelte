@@ -1,10 +1,9 @@
 <script>
-	import { DarkMode } from 'flowbite-svelte';
+	import Header from '$lib/Common/Header.svelte';
 	import '../app.postcss';
-	
 </script>
 
 <main>
-	<DarkMode />
+	<Header />
 	<slot />
 </main>

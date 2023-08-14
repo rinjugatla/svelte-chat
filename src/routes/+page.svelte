@@ -1,8 +1,7 @@
 <script>
-	import { postMessage, onSnapshotMessages } from '$lib/api';
-	import { signInWithGoogle, signOutWithGoogle } from '$lib/firebase';
-	import { UserId, SnapshotMessages } from '$lib/store';
-	import { onDestroy, onMount } from 'svelte';
+	import { postMessage } from '$lib/api';
+	import { UserId } from '$lib/store';
+	import { onDestroy } from 'svelte';
 	import { Textarea, Label, Button } from 'flowbite-svelte';
 	import ChatHistories from '$lib/Components/ChatHistories.svelte';
 
@@ -33,14 +32,6 @@
 		posting = false;
 	};
 </script>
-
-<div>
-    {#if uid}
-        <a class="block" href="#/" on:click={signOutWithGoogle}>Logout</a>
-    {:else}
-        <a class="block" href="#/" on:click={signInWithGoogle}>Login</a>
-    {/if}
-</div>
 
 <ChatHistories />
 
