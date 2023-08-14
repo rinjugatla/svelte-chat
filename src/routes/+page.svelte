@@ -1,5 +1,5 @@
 <script>
-	import { postMessage, fetchMessages, onSnapshotMessages } from '$lib/api';
+	import { postMessage, onSnapshotMessages } from '$lib/api';
 	import { signInWithGoogle, signOutWithGoogle } from '$lib/firebase';
 	import { UserId, SnapshotMessages } from '$lib/store';
 	import { onDestroy, onMount } from 'svelte';
