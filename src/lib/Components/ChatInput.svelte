@@ -43,7 +43,7 @@
 
 <div>
     {#if uid}
-		<form class="p-5">
+		<form class="m-5 fixed inset-x-0 bottom-0">
 			<ButtonGroup class="w-full">
 				<InputAddon class="break-keep">メッセージ</InputAddon>
 				<Input id="message" type="text" bind:value={message} on:keydown={submitByKey}/>
