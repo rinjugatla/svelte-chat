@@ -1,7 +1,5 @@
 <script>
-	import ChatHistories from '$lib/Components/ChatHistories.svelte';
-	import ChatInput from '$lib/Components/ChatInput.svelte';
+	import RoomInput from '$lib/Components/RoomInput.svelte';
 </script>
 
-<ChatHistories />
-<ChatInput />
+<RoomInput />
