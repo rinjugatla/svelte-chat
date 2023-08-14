@@ -2,7 +2,7 @@
     import { UserId } from '$lib/store';
 	import { onDestroy } from 'svelte';
     import { postMessage } from '$lib/api';
-    import { Textarea, Label, Button } from 'flowbite-svelte';
+    import { ButtonGroup, InputAddon, Input, Button } from 'flowbite-svelte';
 
     /**
 	 * @type {string}
@@ -36,14 +36,12 @@
 
 <div>
     {#if uid}
-        <form class="p-5">
-            <div>
-                <Label for="message" class="mb-4">メッセージ</Label>
-                <Textarea id="message" placeholder="" rows="1" bind:value={message} />
-            </div>
-            <div class="text-right">
-                <Button disabled={posting || message.length == 0} on:click={submit}>送信</Button>    
-            </div>
-        </form>
+		<form class="p-5">
+			<ButtonGroup class="w-full">
+				<InputAddon class="break-keep">メッセージ</InputAddon>
+				<Input id="message" type="text" bind:value={message} />
+				<Button class="break-keep" color="primary" disabled={posting || message.length == 0} on:click={submit}>送信</Button>
+			</ButtonGroup>
+		</form>
     {/if}
 </div>
