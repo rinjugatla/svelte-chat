@@ -5,7 +5,7 @@
 
 <main>
 	<Header />
-	<div class="pt-16">
+	<div class="pt-16 z-20">
 		<slot />
 	</div>
 </main>
