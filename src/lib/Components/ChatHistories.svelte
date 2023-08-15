@@ -34,7 +34,7 @@
 	});
 </script>
 
-<div class="m-5">
+<div class="m-5 pb-10">
 	{#each chats as chat}
 		<ChatHistory {chat} />
 	{/each}
