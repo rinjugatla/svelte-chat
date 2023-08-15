@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from 'svelte';
-	import { onSnapshotMessages } from '$lib/api';
-	import { SnapshotMessages } from '$lib/store';
+	import { onSnapshotChats } from '$lib/api';
+	import { SnapshotChats } from '$lib/store';
 	import ChatHistory from './ChatHistory.svelte';
 
 	export let roomId = '';
@@ -14,14 +14,14 @@
 	 */
 	let unsubscribeFirestore;
 	/**
-	 * @type {string[]}
+	 * @type {Array.<{message: string, time: string}>}
 	 */
-	let messages = [];
+	let chats = [];
 	onMount(async () => {
 		try {
-			unsubscribeFirestore = onSnapshotMessages(roomId);
-			unsubscribeStore = SnapshotMessages.subscribe((value) => {
-				messages = value;
+			unsubscribeFirestore = onSnapshotChats(roomId);
+			unsubscribeStore = SnapshotChats.subscribe((value) => {
+				chats = value;
 			});
 		} catch (e) {
 			alert('faild fetchMessages');
@@ -35,7 +35,7 @@
 </script>
 
 <div class="m-5">
-	{#each messages as message}
-		<ChatHistory {message} />
+	{#each chats as chat}
+		<ChatHistory {chat} />
 	{/each}
 </div>

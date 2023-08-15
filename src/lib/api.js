@@ -2,7 +2,7 @@ import { doc, collection, addDoc, query, onSnapshot, orderBy, getDoc, getDocs, w
 import { db, getCurrentUserInfo } from './firebase';
 import dayjs from 'dayjs';
 import { FirebaseError } from 'firebase/app';
-import { SnapshotMessages } from './store';
+import { SnapshotChats } from './store';
 
 /**
  * 部屋IDを取得
@@ -108,20 +108,20 @@ export const postMessage = async (roomId = '', message = '') => {
  * @param roomId string 部屋ID
  * @returns 履歴取得停止
  */
-export const onSnapshotMessages = (roomId = '') => {
+export const onSnapshotChats = (roomId = '') => {
     const q = query(
         collection(db, 'rooms', roomId, 'chats'),
         orderBy('created_at', 'desc'));
 	const unsubscribe = onSnapshot(q, (querySnapshot) => {
         /**
-         * @type {string[]}
+         * @type {Array.<{message: string, time: string}>}
          */
-        let messages = [];
+        let chats = [];
 		querySnapshot.forEach((doc) => {
             const data = doc.data();
-			messages.push(data.message);
+			chats.push({message: data.message, time: data.created_at});
 		});
-        SnapshotMessages.set(messages);
+        SnapshotChats.set(chats);
 	});
     return unsubscribe;
 };
