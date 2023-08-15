@@ -5,5 +5,7 @@
 
 <main>
 	<Header />
-	<slot />
+	<div class="pt-16">
+		<slot />
+	</div>
 </main>
