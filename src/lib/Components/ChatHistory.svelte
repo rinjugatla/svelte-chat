@@ -1,6 +1,5 @@
 <script>
 	import { Toast } from 'flowbite-svelte';
-	import { Icon } from 'flowbite-svelte-icons';
 	import dayjs from 'dayjs';
 
 	/**
